@@ -1,0 +1,23 @@
+{
+  "name": "socialnetwork-api",
+  "version": "1.0.0",
+  "description": "A database and API for a social networking app.",
+  "main": "server.js",
+  "scripts": {
+    "test": "test",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KC-Nick/socialnetwork-api.git"
+  },
+  "author": "KC-Nick",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KC-Nick/socialnetwork-api/issues"
+  },
+  "homepage": "https://github.com/KC-Nick/socialnetwork-api#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
