@@ -22,12 +22,25 @@ const thoughtSchema = new Schema(
     reactions: [reactionSchema],
   },
   {
+    //this changes how the document behaves when converting a document to JSON
     toJSON: {
+      //this includes virtuals in the JSON conversion
       virtuals: true,
+      getters: true,
+      //and this hides the unique identifer
       id: false,
     },
   }
 );
+
+//creates a virtual to retrieve the length of the thought model's reaction array
+postSchema
+  .virtual('reactionCount')
+  // getter function
+  .get(function () {
+    return this.reactions.length;
+  });
+
 
 const Thought = model('thought', thoughtSchema);
 
