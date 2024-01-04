@@ -14,7 +14,7 @@ module.exports = {
 
   async getSingleUser(req, res) {
     try {
-      const user = await User.findOne({ _id: req.params.id })
+      const user = await User.findOne({ _id: req.params.userId })
         .populate('thoughts');
 
       if (!user) {
@@ -39,7 +39,7 @@ module.exports = {
 
   async deleteUser(req, res) {
     try {
-      const user = await User.findOneAndDelete({ _id: req.params.id });
+      const user = await User.findOneAndDelete({ _id: req.params.userId });
 
       if (!user) {
         res.status(404).json({ message: 'No user with that ID' });

@@ -18,7 +18,6 @@ const userSchema = new Schema(
       type: String,
       required: true,
       unique: true,
-      //NOTE check this regex with `` or without
       //match creates a validator in SchemaType string which uses Regex
       match: [/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'Please enter a valid email address'],
     },
