@@ -38,6 +38,7 @@ module.exports = {
 
       const user = await User.findOneAndUpdate(
         { _id: req.body.user },
+        //this takes a value and pushes it to the thoughts array
         { $push: { thoughts: thought._id } },
         { new: true }
       );
@@ -75,7 +76,7 @@ module.exports = {
 
   async deleteThought(req, res) {
     try {
-      const thought = await Thought.findOneAndRemove({ _id: req.params._id });
+      const thought = await Thought.findOneAndDelete({ _id: req.params._id });
 
       if (!thought) {
         return res.status(404).json({ message: 'No such thought exists' });
@@ -95,6 +96,7 @@ module.exports = {
     try {
       const thought = await Thought.findOneAndUpdate(
         { _id: req.params._id },
+        //this adds to the reactions array of the Thought model
         { $addToSet: { reactions: req.body } },
         { runValidators: true, new: true }
       );
@@ -114,6 +116,7 @@ module.exports = {
     try {
       const thought = await Thought.findOneAndUpdate(
         { _id: req.params._id },
+        //this pulls value from reactions array
         { $pull: { reactions: { reactionId: req.params.reactionId } } },
         { new: true }
       );

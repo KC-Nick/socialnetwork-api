@@ -10,14 +10,14 @@ const thoughtSchema = new Schema(
       minLength: 1,
       maxLength: 280,
     },
-    //change this to userId because it's not the username
-    user: {
+    userId: {
       type: Schema.Types.ObjectId,
       ref: 'User'
     },
     createdAt: {
       type: Date,
       default: Date.now(),
+      //this translates Date.now() to a readable format, and as a getter it is allowed in the toJSON property below
       get: function (timestamp) {
         return new Date(timestamp).toLocaleString();
       }

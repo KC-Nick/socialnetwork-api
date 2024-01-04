@@ -27,6 +27,7 @@ connection.once('open', async () => {
     await connection.dropCollection('friends');
   }
 
+  // loops through random emails to push to empty array and check array to avoid repetitions
   const generateUniqueEmail = (existingEmails) => {
     let email = getRandomEmail();
 
@@ -52,7 +53,9 @@ connection.once('open', async () => {
   const existingEmails = [];
   const existingUsers = [];
 
+    //userPromises creates an array the length of 5 and map populates it with the following functions
   const userPromises = Array.from({ length: numUsers }).map(() => {
+    //these are pushing the generated unique email to the empty array and then calling it in the User.create
     const email = generateUniqueEmail(existingEmails);
     existingEmails.push(email);
     const username = generateUniqueUser(existingUsers);
@@ -65,6 +68,7 @@ connection.once('open', async () => {
     });
   });
 
+  //this takes the array of promises from the function in userPromises and when they're finished it continues to process
   Promise.all(userPromises)
     .then(() => console.info('Seeding complete! 🌱'))
     .catch(err => console.error(err))
