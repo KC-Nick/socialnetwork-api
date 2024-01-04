@@ -3,11 +3,6 @@ const { Schema, model } = require('mongoose');
 // Schema to create User model
 const userSchema = new Schema(
   {
-    userId: {
-      type: Schema.Types.ObjectId,
-      required: true,
-      unique: true
-    },
     username: {
       type: String,
       unique: true,
@@ -46,8 +41,8 @@ const userSchema = new Schema(
       //this includes virtuals in the JSON conversion
       virtuals: true,
       getters: true,
-      //and this hides the unique identifer of the User when converted to JSON for security
-      id: false,
+      // the unique identifer of the User when converted to JSON for security
+      id: true,
     },
   }
 );

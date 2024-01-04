@@ -39,25 +39,27 @@ connection.once('open', async () => {
     return email;
   };
 
-  const existingEmails = [];
-
-  const email = generateUniqueEmail(existingEmails);
-
   // function to generate a valid ObjectId
   function generateObjectId() {
     return new mongoose.Types.ObjectId();
   }
 
-  // inserts User with unique username and email into database
-      let user = await User.create({
-        userId: generateObjectId(),
-        username: getRandomUser(),
-        email
-      });
+      const numUsers = 5;
+      const existingEmails = [];
 
-  // log out the seed data to indicate what should appear in the database
-  res.json(user);
-  console.table(user);
-  console.info('Seeding complete! 🌱');
-  process.exit(0);
+      const userPromises = Array.from({ length: numUsers }).map(() => {
+        const email = generateUniqueEmail(existingEmails);
+        existingEmails.push(email);
+
+        return User.create({
+          userId: generateObjectId(),
+          username: getRandomUser(),
+          email
+        });
+      });
+      
+      Promise.all(userPromises)
+        .then(() => console.info('Seeding complete! 🌱'))
+        .catch(err => console.error(err))
+        .finally(() => process.exit(0));
 });

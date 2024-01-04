@@ -3,11 +3,6 @@ const { Schema, model } = require('mongoose');
 // Schema to create Thought model
 const thoughtSchema = new Schema(
   {
-    thoughtId: {
-      type: Schema.Types.ObjectId,
-      required: true,
-      unique: true
-    },
     thoughtText: {
       type: String,
       required: true,
