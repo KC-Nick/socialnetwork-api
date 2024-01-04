@@ -3,6 +3,11 @@ const { Schema, model } = require('mongoose');
 // Schema to create User model
 const userSchema = new Schema(
   {
+    userId: {
+      type: Schema.Types.ObjectId,
+      required: true,
+      unique: true
+    },
     username: {
       type: String,
       unique: true,
@@ -13,23 +18,28 @@ const userSchema = new Schema(
       type: String,
       required: true,
       unique: true,
-      //NOTE check this regex with ``
+      //NOTE check this regex with `` or without
       //match creates a validator in SchemaType string which uses Regex
-      match: [`/^([\w-\.]+@([\w-]+\.)+[\w-]{2,})?$/`, 'Please enter a valid email address'],
+      match: [/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'Please enter a valid email address'],
     },
     thoughts: [
       {
-        //this type is used to store _id values of the Thought documents associated with this user
-        type: Schema.Types.ObjectId,
-        ref: 'Thought'
-      }
+        thoughtId:
+        {
+          //this type is used to store _id values of the Thought documents associated with this user
+          type: Schema.Types.ObjectId,
+          ref: 'Thought'
+        }
+      },
     ],
     friends: [
       {
-        type: Schema.Types.ObjectId,
-        ref: 'User'
+        friendId: {
+          type: Schema.Types.ObjectId,
+          ref: 'User'
+        }
       }
-    ]
+    ],
   },
   {
     //this changes how the document behaves when converting a document to JSON
@@ -44,7 +54,7 @@ const userSchema = new Schema(
 );
 
 //creates a virtual to retrieve the length of the user's friends array
-postSchema
+userSchema
   .virtual('friendCount')
   // getter function
   .get(function () {
