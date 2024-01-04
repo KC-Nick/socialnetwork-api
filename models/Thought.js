@@ -1,4 +1,5 @@
-const { Schema, model } = require('mongoose');
+const mongoose = require('mongoose');
+const { Schema, model } = mongoose;
 
 // Schema to create Thought model
 const thoughtSchema = new Schema(
@@ -9,19 +10,22 @@ const thoughtSchema = new Schema(
       minLength: 1,
       maxLength: 280,
     },
+    //change this to userId because it's not the username
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    },
     createdAt: {
       type: Date,
       default: Date.now(),
+      get: function (timestamp) {
+        return new Date(timestamp).toLocaleString();
+      }
     },
-    username: {
-      type: String,
-      required: true,
-    },
-    reactions: [ {
+    reactions: [{
       reactionId: {
         type: Schema.Types.ObjectId,
-        required: true,
-        unique: true
+        default: () => new mongoose.Types.ObjectId()
       },
       reactionBody: {
         type: String,

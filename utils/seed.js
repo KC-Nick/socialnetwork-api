@@ -38,22 +38,35 @@ connection.once('open', async () => {
     return email;
   };
 
-      const numUsers = 5;
-      const existingEmails = [];
+  const generateUniqueUser = (existingUsers) => {
+    let username = getRandomUser();
 
-      const userPromises = Array.from({ length: numUsers }).map(() => {
-        const email = generateUniqueEmail(existingEmails);
-        existingEmails.push(email);
+    while (existingUsers.includes(username)) {
+      username = getRandomUser();
+    }
 
-        return User.create({
-          userId: generateObjectId(),
-          username: getRandomUser(),
-          email
-        });
-      });
-      
-      Promise.all(userPromises)
-        .then(() => console.info('Seeding complete! 🌱'))
-        .catch(err => console.error(err))
-        .finally(() => process.exit(0));
+    return username;
+  };
+
+  const numUsers = 5;
+  const existingEmails = [];
+  const existingUsers = [];
+
+  const userPromises = Array.from({ length: numUsers }).map(() => {
+    const email = generateUniqueEmail(existingEmails);
+    existingEmails.push(email);
+    const username = generateUniqueUser(existingUsers);
+    existingUsers.push(username);
+
+    return User.create({
+      userId: generateObjectId(),
+      username,
+      email
+    });
+  });
+
+  Promise.all(userPromises)
+    .then(() => console.info('Seeding complete! 🌱'))
+    .catch(err => console.error(err))
+    .finally(() => process.exit(0));
 });
