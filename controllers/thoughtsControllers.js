@@ -35,9 +35,8 @@ module.exports = {
   async createThought(req, res) {
     try {
       const thought = await Thought.create(req.body);
-
       const user = await User.findOneAndUpdate(
-        { _id: req.body.user },
+        { _id: req.body.user_id },
         //this takes a value and pushes it to the thoughts array
         { $push: { thoughts: thought._id } },
         { new: true }
