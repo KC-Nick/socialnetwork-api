@@ -1,7 +1,6 @@
 const connection = require('../config/connection');
-const mongoose = require('mongoose');
 const { User } = require('../models');
-const { getRandomUser, getRandomEmail } = require('./data');
+const { getRandomUser, getRandomEmail, generateObjectId } = require('./data');
 
 connection.on('error', (err) => err);
 
@@ -38,11 +37,6 @@ connection.once('open', async () => {
 
     return email;
   };
-
-  // function to generate a valid ObjectId
-  function generateObjectId() {
-    return new mongoose.Types.ObjectId();
-  }
 
       const numUsers = 5;
       const existingEmails = [];

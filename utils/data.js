@@ -1,3 +1,5 @@
+const mongoose = require('mongoose');
+
 const usernames = [
     'gerrylee54',
     'pixiegrrrl',
@@ -8,6 +10,7 @@ const usernames = [
     'skol698',
     'underdoggone'
 ];
+
 const emails = [
     'totally2tubular2@yahoo.com',
     'supersailor554@gmail.com',
@@ -27,4 +30,10 @@ const getRandomUser = () =>
 const getRandomEmail = () =>
     `${getRandomArrItem(emails)}`
 
-module.exports = { getRandomUser, getRandomEmail };
+// function to generate a valid ObjectId
+function generateObjectId() {
+    return new mongoose.Types.ObjectId();
+}
+
+
+module.exports = { getRandomUser, getRandomEmail, generateObjectId };

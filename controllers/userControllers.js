@@ -1,6 +1,5 @@
 const { User, Thought } = require('../models');
 
-
 module.exports = {
   // 
   async getUsers(req, res) {
@@ -103,8 +102,8 @@ module.exports = {
     try {
       const user = await User.findOneAndUpdate(
         { _id: req.params._id },
-        { $pull: { friends: req.params.friendId } },
-        { runValidators: true, new: true }
+        { $pull: { friends: { _id: req.params.friendId } } },
+        { new: true }
       );
 
       if (!user) {
@@ -114,6 +113,7 @@ module.exports = {
       res.json(user);
     } catch (err) {
       res.status(500).json(err);
+      console.log(err);
     }
   },
 };
