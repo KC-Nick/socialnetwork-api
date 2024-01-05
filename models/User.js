@@ -42,7 +42,7 @@ const userSchema = new Schema(
       virtuals: true,
       getters: true,
       // the unique identifer of the User when converted to JSON for security
-      id: true,
+      id: false,
     },
   }
 );
